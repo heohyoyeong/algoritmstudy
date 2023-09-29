@@ -35,4 +35,12 @@ sys.stdin = open("input.txt", "r")
 t = int(input())
 
 for tc in range(1, t + 1):
-    A0, B0 = input().split()
+    A0, B0 = list(map(float,input().split()))
+
+    diff = B0 - A0
+    if diff==1 or diff<0:
+        print(f"#{tc} -1")
+    else:
+        print(f"#{tc} {int(diff//2)}")
+
+
