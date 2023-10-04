@@ -18,7 +18,7 @@ sys.stdin = open("input.txt", "r")
 T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 
-def func(A,B):
+def gcd(A,B):
     while True:
         C = B%A
         if C == 0:
@@ -29,21 +29,13 @@ def func(A,B):
 
 for test_case in range(1, T + 1):
     A, B = list(map(int,input().split()))
-    Num_list = [i for i in range(A,B+1)]
-
-    while True:
-        if len(Num_list)==1:
-            print(f"#{test_case} {Num_list[0]}")
+    C = gcd(A, B)
+    while A < B:
+        A = A + 1
+        if A % C != 0:
+            C = gcd(A, C)
+        if C == 1:
             break
-
-        start = Num_list[0]
-        result = []
-        for i in range(1,len(Num_list)):
-            result.append(func(start, Num_list[i]))
-
-
-        else:
-            Num_list = result
-
+    print(f'#{test_case} {C}')
 
 
