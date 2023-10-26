@@ -1,41 +1,29 @@
-import sys
-sys.stdin = open("input.txt", "r")
-
 T = int(input())
 
-
-
-
-for test_case in range(1, T + 1):
+for tc in range(1, T+1):
     N = int(input())
-    array = [[0 for _ in range(25)] for _ in range(25)]
-    start = 24
+    info = [list(map(int, input().split()))for _ in range(N)]
 
-    for _ in range(N):
-        St, Et = list(map(int,input().split()))
-        if sum(array[St])!=0:
-            index = array[St].index(1)
-            if index > Et:
-                array[St][Et] = 1
-                array[St][index] = 0
-        else:
-            array[St][Et] = 1
-        if start > St:
-            start = St
+    # 종료시간으로 정렬후 차근차근 겹치는 시간이 없도록 비교해본다.
 
-    result = 0
+    # 종료시간을 기준으로 정렬을 할것이다.
+    sorted_info = sorted(info, key=lambda x: x[1])
+    # 카운트 횟수
+    cnt = 0
+    # 현재 종료시간
+    now = 0
+    # 돌면서 검사
+    for i in range(N):
+        # 시작시간정의
+        s = sorted_info[i][0]
+        # 종료시간 정의
+        e = sorted_info[i][1]
+        # 만약 작업시간이 안겹친다면, 즉 종료시간보다 크거나 같다면
+        if now <= s:
+            # 할수있음
+            cnt += 1
+            # 종료 예정시간 갱신
+            now = e
 
-    for i in range(start, 24):
-        new_start = i
-        new_end = 0
-        new_result = 0
-        if sum(array[i])!=0:
-            while new_end<24:
-                new_result += 1
-                new_end = array[new_start].index(1)
-                while sum(array[new_end])==0 and new_end<24:
-                    new_end+=1
-                new_start = new_end
-            if result<new_result:
-                result=new_result
-    print(result)
+
+    print("#{} {}".format(tc, cnt ))
